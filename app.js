@@ -9,9 +9,15 @@ const app = express();
 // connect to mongodb & listen for requests
 const dbURI = "mongodb://localhost:27017/bookstore";
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result)=> app.listen(3000))
-  .catch(err => console.log(err));
+const PORT = process.env.PORT || 3000
+mongoose
+	.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+	.then((result) =>
+		app.listen(PORT, () => {
+			console.log(`We are listening on port ${PORT}`);
+		})
+	)
+	.catch((err) => console.log(err));
 
 // register view engine
 app.set('view engine', 'ejs');
